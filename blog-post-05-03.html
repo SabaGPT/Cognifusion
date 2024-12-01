@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI插画的实战方法：从风格学习到个性创作 - Cognifusion</title>
+    <style>
+      /* 继承主站的全局变量 */
+      :root {
+        --primary-bg: #06002e;
+        --primary-gradient: linear-gradient(135deg, #9561e2 0%, #5865f2 100%);
+        --card-gradient: linear-gradient(
+          135deg,
+          rgba(149, 97, 226, 0.1) 0%,
+          rgba(88, 101, 242, 0.1) 100%
+        );
+        --text-primary: #ffffff;
+        --text-secondary: rgba(255, 255, 255, 0.7);
+        --card-border-radius: 1rem;
+        --container-width: 90vw;
+      }
+
+      /* 重置默认样式 */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background-color: var(--primary-bg);
+        color: var(--text-primary);
+        font-family: system-ui, -apple-system, sans-serif;
+        line-height: 1.6;
+      }
+
+      /* 文章容器样式 */
+      .article-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 2rem clamp(1rem, 5vw, 3rem);
+        margin-top: 80px; /* 为导航栏留出空间 */
+      }
+
+      /* 文章标题样式 */
+      .article-header {
+        text-align: center;
+        margin-bottom: 4rem;
+        position: relative;
+      }
+
+      .article-title {
+        font-size: clamp(2rem, 5vw, 3rem);
+        margin-bottom: 1.5rem;
+        line-height: 1.2;
+      }
+
+      /* 文章内容样式 */
+      .article-content {
+        font-size: 1.1rem;
+        color: var(--text-secondary);
+      }
+
+      .article-content h2 {
+        color: var(--text-primary);
+        font-size: 1.8rem;
+        margin: 3rem 0 1.5rem;
+      }
+
+      .article-content h3 {
+        color: var(--text-primary);
+        font-size: 1.4rem;
+        margin: 2rem 0 1rem;
+      }
+
+      .article-content p {
+        margin-bottom: 1.5rem;
+      }
+
+      .article-content ul,
+      .article-content ol {
+        margin: 1.5rem 0;
+        padding-left: 2rem;
+      }
+
+      .article-content li {
+        margin-bottom: 0.5rem;
+      }
+
+      /* 代码块样式 */
+      .article-content pre {
+        background: var(--card-gradient);
+        border-radius: var(--card-border-radius);
+        padding: 1.5rem;
+        margin: 1.5rem 0;
+        overflow-x: auto;
+      }
+
+      .article-content code {
+        font-family: "Courier New", Courier, monospace;
+        color: #9561e2;
+      }
+
+      /* 分割线样式 */
+      .article-content hr {
+        border: none;
+        height: 1px;
+        background: var(--text-secondary);
+        opacity: 0.2;
+        margin: 3rem 0;
+      }
+
+      /* 装饰元素 */
+      .floating-shape {
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        background: var(--primary-gradient);
+        filter: blur(30px);
+        opacity: 0.5;
+        border-radius: 50%;
+        z-index: -1;
+      }
+
+      /* 响应式设计 */
+      @media (max-width: 768px) {
+        .article-container {
+          padding: 1rem;
+        }
+
+        .article-content {
+          font-size: 1rem;
+        }
+      }
+
+      /* 继承主站的导航栏样式 */
+      .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: rgba(10, 6, 31, 0.95);
+        backdrop-filter: blur(10px);
+        z-index: 1000;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .nav-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 80px;
+        padding: 0 clamp(1rem, 5vw, 3rem);
+        max-width: var(--container-width);
+        margin: 0 auto;
+      }
+
+      .nav-logo {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        text-decoration: none;
+      }
+
+      /* 返回按钮样式 */
+      .back-button {
+        color: var(--text-primary);
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: color 0.3s ease;
+      }
+
+      .back-button:hover {
+        color: #9561e2;
+      }
+
+      /* 在 article-content 样式后添加 */
+      .image-showcase {
+        margin: 2rem 0;
+        background: var(--card-gradient);
+        border-radius: var(--card-border-radius);
+        padding: 2rem;
+      }
+
+      .image-group {
+        margin-bottom: 2rem;
+      }
+
+      .image-group:last-child {
+        margin-bottom: 0;
+      }
+
+      .image-group img {
+        width: 100%;
+        border-radius: 0.5rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .image-caption {
+        text-align: center;
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+      }
+
+      .image-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+      }
+
+      @media (max-width: 768px) {
+        .image-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .image-showcase {
+          padding: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="/" class="nav-logo">Cognifusion</a>
+        <a href="/" class="back-button">← 返回首页</a>
+      </div>
+    </nav>
+
+    <!-- 文章内容 -->
+    <article class="article-container">
+      <header class="article-header">
+        <div class="floating-shape" style="left: -50px; top: 0"></div>
+        <div class="floating-shape" style="right: -50px; bottom: 0"></div>
+        <h1 class="article-title">AI插画的实战方法：从风格学习到个性创作</h1>
+      </header>
+
+      <div class="article-content">
+        <p>
+          还记得第一次被某位艺术家的画风深深吸引的感觉吗？那独特的色彩运用、精妙的构图设计、细腻的笔触表...像一串独特的DNA序列，构成了艺术家标志性的风格密码。在AI时代，我们找到了破译和重现这些艺术密码的新方法：通过Lora技术将欣赏转化为创作，让AI成为传递我们艺术审美的得力助手。
+        </p>
+
+        <h2>解密Lora：艺术风格的编程语言</h2>
+        <p>
+          如同量子计算领域的突破性发现，Lora技术为AI艺术创作带来了革命性的变化。它就像一个精密的风格编译器，能够将艺术家的风格特征转换为AI可以理解和运用的"程序代码"。
+        </p>
+
+        <p>Lora的突破性在于：</p>
+        <ul>
+          <li>高效的训练速度，仅需几个小时即可完成风格迁移</li>
+          <li>轻量级的资源占用，适配普通的消费级显卡</li>
+          <li>小巧的模型体积，方便在创作者间共享</li>
+          <li>模块化的功能设计，不影响基础模型的性能</li>
+        </ul>
+
+        <div class="image-showcase">
+          <div class="image-group">
+            <img
+              src="images/blog-05-03-01.png"
+              alt="原始参考图片 - 户外庭院场景"
+            />
+            <p class="image-caption">
+              原始艺术家作品：温馨的户外庭院场景，展现了独特的色彩运用和构图设计
+            </p>
+          </div>
+          <div class="image-group">
+            <img
+              src="images/blog-05-03-02.png"
+              alt="Lora生成效果 - 室内书房场景"
+            />
+            <p class="image-caption">
+              Lora模型生成效果：保持了原有的艺术风格，同时创造出新的室内场景
+            </p>
+          </div>
+        </div>
+
+        <h2>Sweet Life Style：风格编程的成功实践</h2>
+        <p>
+          让我们通过Sweet Life
+          Style的案例，探索如何将艺术风格数字化。这个充满治愈力的插画风格，像是一段优雅的程序，将温暖与美好编织成视觉的语言。
+        </p>
+
+        <h3>解析艺术风格的数字特征</h3>
+        <p>
+          就像解析一段优秀的程序源码，我们需要深入理解Sweet Life
+          Style的核心组件：
+        </p>
+
+        <ul>
+          <li>
+            <strong>视觉渲染系统（色彩）：</strong><br />
+            采用温暖的粉色、紫色、天蓝色作为基础色值，通过精确的渐变算法创造出柔和的视觉过渡
+          </li>
+
+          <li>
+            <strong>空间布局引擎（构图）：</strong><br />
+            运用留白作为视觉缓冲，将主体元素放置在画面的黄金分割点，创造层次分明的视觉架构
+          </li>
+
+          <li>
+            <strong>细节渲染模块（装饰）：</strong><br />
+            通过星星、光点等粒子系统，为画面注入梦幻的视觉元素
+          </li>
+
+          <li>
+            <strong>场景生成器（主题）：</strong><br />
+            专注于生活场景、人物状态和环境氛围的精确重现
+          </li>
+        </ul>
+
+        <div class="image-showcase">
+          <div class="image-grid">
+            <div class="image-group">
+              <img
+                src="images/blog-05-03-03.png"
+                alt="Sweet Life Style - 柔和可爱风格"
+              />
+              <p class="image-caption">
+                权重0.8：柔和可爱风格 - 短发造型与活泼的表情展现了青春可爱的特质
+              </p>
+            </div>
+            <div class="image-group">
+              <img
+                src="images/blog-05-03-04.png"
+                alt="Sweet Life Style - 标准优雅风格"
+              />
+              <p class="image-caption">
+                权重1.0：标准优雅风格 -
+                平衡了可爱与成熟的气质，展现温暖治愈的圣诞氛围
+              </p>
+            </div>
+            <div class="image-group">
+              <img
+                src="images/blog-05-03-05.png"
+                alt="Sweet Life Style - 成熟锐利风格"
+              />
+              <p class="image-caption">
+                权重1.1：成熟锐利风格 - 长发造型与精致的妆容突出了更为成熟的气质
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <h2>系统实现：从数据到模型</h2>
+        <h3>数据采集与预处理</h3>
+        <p>数据质量直接决定了模型的学习效果。在准备训练数据时,我们需要注意:</p>
+        <ul>
+          <li>建立风格识别标准，确保样本的一致性</li>
+          <li>对图像数据进行标准化处理</li>
+          <li>构建多样化的场景数据集</li>
+          <li>建立严格的筛选机制</li>
+        </ul>
+
+        <h3>模型训练与优化</h3>
+        <p>在实际训练中,我们需要关注以下关键点:</p>
+        <ul>
+          <li>样本多样性确保模型的泛化能力</li>
+          <li>风格一致性维持输出的稳定性</li>
+          <li>参数微调优化生成效果</li>
+          <li>持续的效果评估与修正</li>
+        </ul>
+
+        <h3>部署与应用</h3>
+        <p>经过训练的模型如同一个精密的风格转换引擎，需要掌握其工作参数：</p>
+
+        <p>关键参数设定：</p>
+        <ul>
+          <li>权重0.8：输出偏向可爱风格，细节处理更加柔和</li>
+          <li>权重0.9-1.0：标准的温柔优雅风格，平衡度最佳</li>
+          <li>权重1.1：风格更显成熟，细节表现更为锐利</li>
+        </ul>
+
+        <h2>实验与优化：提升生成质量</h2>
+        <p>为了获得最佳的生成效果，我们需要进行系统化的实验：</p>
+
+        <h3>1. 风格解析实验</h3>
+        <p>
+          选取目标风格的代表作品，分析其视觉特征的数字化表现。记录色彩数值、构图比例、细节分布等关键参数。
+        </p>
+
+        <h3>2. 提示词工程实验</h3>
+        <p>通过对提示词的系统化测试，找出能够最准确触发目标风格的语言模式。</p>
+
+        <h3>3. 参数优化实验</h3>
+        <p>针对不同场景类型，建立最优参数组合的数据库，为后续创作提供参考。</p>
+
+        <h2>人机协作：艺术创作的新范式</h2>
+        <p>在这个AI赋能的创作时代，创作流程发生了革命性的变化：</p>
+
+        <h3>创作者的核心职责：</h3>
+        <ul>
+          <li>艺术方向的顶层设计</li>
+          <li>提示工程的精确实现</li>
+          <li>输出结果的审美判断</li>
+          <li>作品的后期优化</li>
+        </ul>
+
+        <h3>AI系统的职责：</h3>
+        <ul>
+          <li>风格迁移的技术实现</li>
+          <li>创意可能性的拓展</li>
+          <li>创作效率的提升</li>
+        </ul>
+
+        <h2>未来展望：技术与艺术的共生</h2>
+        <p>
+          AI辅助创作正如量子计算之于经典计算，不是替代，而是开启了全新的可能性空间。通过不断的技术创新和艺术探索，我们正在开创一个人机协作的创作新纪元。
+        </p>
+
+        <p>
+          每一位创作者都是这场技术与艺术革命的参与者和见证者。让我们继续探索、实验和创新，在这个可能性无限的领域中，谱写属于自己的创作篇章。
+        </p>
+
+        <hr />
+
+        <p>有什么创作中的技术难题？欢迎在评论区讨论你的实验心得。</p>
+      </div>
+    </article>
+  </body>
+</html>

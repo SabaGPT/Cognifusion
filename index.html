@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cognifusion - AI与人类协作的未来</title>
+    <style>
+      /* 定义全局变量，便于统一管理颜色和样式 */
+      :root {
+        --primary-bg: #06002e;
+        --primary-gradient: linear-gradient(135deg, #9561e2 0%, #5865f2 100%);
+        --card-gradient: linear-gradient(
+          135deg,
+          rgba(149, 97, 226, 0.1) 0%,
+          rgba(88, 101, 242, 0.1) 100%
+        );
+        --text-primary: #ffffff;
+        --text-secondary: rgba(255, 255, 255, 0.7);
+        --card-border-radius: 1rem;
+        --container-width: 90vw;
+      }
+
+      /* 重置默认样式 */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background-color: var(--primary-bg);
+        color: var(--text-primary);
+        font-family: system-ui, -apple-system, sans-serif;
+        line-height: 1.5;
+        overflow-x: hidden;
+      }
+
+      /* 通用容器样式 */
+      .container {
+        width: var(--container-width);
+        margin: 0 auto;
+        padding: 0 clamp(1rem, 5vw, 3rem);
+      }
+
+      /* 头部样式 */
+      .header {
+        position: relative;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 2rem;
+        padding-top: 80px;
+      }
+
+      .logo {
+        display: none;
+      }
+
+      .hero-ring {
+        position: absolute;
+        width: 500px;
+        height: 500px;
+        animation: rotate 20s linear infinite;
+      }
+
+      .hero-title {
+        font-size: 3.5rem;
+        margin-bottom: 1rem;
+        position: relative;
+        z-index: 1;
+      }
+
+      .hero-subtitle {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* 简介部分样式 */
+      .intro {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        padding: 6rem 0;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        align-items: center;
+      }
+
+      .intro-content {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        max-width: 600px;
+      }
+
+      .intro-image {
+        border-radius: var(--card-border-radius);
+        height: 400px;
+        width: 100%;
+        object-fit: cover;
+      }
+
+      .intro-content p {
+        font-size: clamp(1.1rem, 2vw, 1.3rem);
+        line-height: 1.8;
+      }
+
+      /* 能力展示部分样式 */
+      .capabilities {
+        min-height: 100vh;
+        padding: 6rem 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .section-title {
+        font-size: 2.5rem;
+        margin-bottom: 3rem;
+        text-align: center;
+      }
+
+      .capabilities-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+      }
+
+      .capability-card {
+        background: var(--card-gradient);
+        border-radius: var(--card-border-radius);
+        padding: 2rem;
+        transition: transform 0.3s ease;
+      }
+
+      .capability-card:hover {
+        transform: translateY(-5px);
+      }
+
+      /* Gallery部分样式 */
+      .gallery {
+        min-height: 100vh;
+        padding: 6rem 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+      }
+
+      .gallery-item {
+        background: var(--card-gradient);
+        border-radius: var(--card-border-radius);
+        aspect-ratio: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+        overflow: hidden;
+      }
+
+      .gallery-item:hover {
+        transform: translateY(-5px);
+      }
+
+      .placeholder-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      /* 愿景部分样式 */
+      .vision {
+        min-height: 100vh;
+        padding: 6rem 0;
+        text-align: center;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .vision-text {
+        font-size: clamp(1.8rem, 4vw, 2.5rem);
+        line-height: 2;
+        max-width: min(90%, 1200px);
+        margin: 0 auto;
+        padding: 0 1rem;
+      }
+
+      .floating-shape {
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        background: var(--primary-gradient);
+        filter: blur(30px);
+        opacity: 0.5;
+        border-radius: 50%;
+        animation: float 6s ease-in-out infinite;
+      }
+
+      /* 知识创造部分样式 */
+      .knowledge {
+        min-height: 100vh;
+        padding: 6rem 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .knowledge-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+      }
+
+      .knowledge-card {
+        background: var(--card-gradient);
+        border-radius: var(--card-border-radius);
+        padding: 2rem;
+        height: 100%;
+      }
+
+      .knowledge-card-image {
+        width: 120px;
+        height: 120px;
+        margin: 0 auto 2rem;
+        border-radius: 50%;
+        overflow: hidden;
+      }
+
+      .circle-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      /* 联系部分样式 */
+      .contact {
+        min-height: 100vh;
+        padding: 6rem 0;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .contact-header {
+        margin-bottom: 3rem;
+        text-align: center;
+      }
+
+      .contact-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+      }
+
+      .contact-card {
+        background: var(--card-gradient);
+        border-radius: var(--card-border-radius);
+        padding: 2rem;
+        text-align: center;
+      }
+
+      .geometric-shape {
+        position: absolute;
+        right: 2rem;
+        top: 2rem;
+        width: 200px;
+        height: 200px;
+        background: var(--primary-gradient);
+        transform: perspective(500px) rotateX(30deg) rotateY(-30deg);
+      }
+
+      /* 动画定义 */
+      @keyframes rotate {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      @keyframes float {
+        0% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-20px);
+        }
+        100% {
+          transform: translateY(0);
+        }
+      }
+
+      /* 响应式设计 */
+      @media (min-width: 768px) {
+        .capabilities-grid,
+        .knowledge-grid,
+        .contact-grid,
+        .gallery-grid {
+          gap: clamp(2rem, 3vw, 4rem);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .intro {
+          grid-template-columns: 1fr;
+          padding: 3rem 0;
+          gap: 2rem;
+        }
+
+        .hero-title {
+          font-size: clamp(2rem, 5vw, 3.5rem);
+        }
+
+        .hero-subtitle {
+          font-size: clamp(1.2rem, 3vw, 2rem);
+        }
+
+        .hero-ring {
+          width: 90vw;
+          height: 90vw;
+          max-width: 300px;
+          max-height: 300px;
+        }
+
+        .capabilities-grid,
+        .knowledge-grid,
+        .contact-grid,
+        .gallery-grid {
+          grid-template-columns: 1fr;
+          gap: 1.5rem;
+        }
+
+        .section-title {
+          font-size: clamp(1.8rem, 4vw, 2.5rem);
+          margin-bottom: 2rem;
+        }
+
+        .capability-card,
+        .knowledge-card,
+        .contact-card {
+          padding: 1.5rem;
+        }
+
+        .vision-text {
+          font-size: clamp(1.8rem, 4vw, 2.5rem);
+          line-height: 1.6;
+          padding: 0 1rem;
+        }
+
+        .floating-shape {
+          width: 60px;
+          height: 60px;
+        }
+
+        .intro-content {
+          gap: 1rem;
+          max-width: 100%;
+        }
+
+        .intro-content p {
+          font-size: 1rem;
+          line-height: 1.6;
+        }
+      }
+
+      /* 添加更小屏幕的样式 */
+      @media (max-width: 480px) {
+        .container {
+          width: 95vw;
+        }
+
+        .nav-container {
+          height: 60px;
+          padding: 0 1rem;
+        }
+
+        .nav-logo {
+          font-size: 1.2rem;
+        }
+
+        .capability-card,
+        .knowledge-card,
+        .contact-card {
+          padding: 1rem;
+        }
+
+        .intro-image {
+          height: 250px;
+        }
+      }
+
+      /* 在 body 样式之后添加 */
+      .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: rgba(10, 6, 31, 0.95);
+        backdrop-filter: blur(10px);
+        z-index: 1000;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .nav-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 80px;
+        padding: 0 clamp(1rem, 5vw, 3rem);
+        width: 100%;
+      }
+
+      .nav-logo {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-right: auto;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+        margin-left: auto;
+      }
+
+      .nav-links a {
+        color: var(--text-primary);
+        text-decoration: none;
+        font-size: 1rem;
+        transition: color 0.3s ease;
+        white-space: nowrap;
+      }
+
+      .nav-links a:hover {
+        color: #9561e2;
+      }
+
+      /* 修改 header 样式，添加上边距防止导航栏遮挡 */
+      .header {
+        padding-top: 80px; /* 添加这行 */
+      }
+
+      /* 修改 logo 样因为在logo在导航栏 */
+      .logo {
+        display: none; /* 隐藏原来的logo */
+      }
+
+      /* 添加响应式样式 */
+      @media (max-width: 768px) {
+        .nav-links {
+          display: none; /* 在移端先后续可以添加汉堡菜单 */
+        }
+      }
+
+      /* 在 :root 中添加 */
+      html {
+        scroll-behavior: smooth;
+      }
+
+      /* 修改 CTA 按钮样式，使其固定在右下角 */
+      .cta-button {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        display: inline-block;
+        background: var(--primary-gradient);
+        color: var(--text-primary);
+        text-decoration: none;
+        padding: 1rem 2.5rem;
+        border-radius: 2rem;
+        font-size: 1.1rem;
+        font-weight: 500;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        z-index: 999; /* 确保按钮显示在其他元素上方 */
+      }
+
+      .cta-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(149, 97, 226, 0.2);
+      }
+
+      /* 添加响应式样式 */
+      @media (max-width: 768px) {
+        .cta-button {
+          bottom: 1rem;
+          right: 1rem;
+          padding: 0.8rem 2rem;
+          font-size: 1rem;
+        }
+      }
+
+      /* 添加图片样式 */
+      .capability-image {
+        width: 100%;
+        height: auto;
+        margin: 1rem 0;
+        border-radius: 0.5rem;
+        object-fit: cover;
+      }
+
+      /* 添加模态框相关样式 */
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1001;
+        padding: 2rem;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(6, 0, 46, 0.95);
+        backdrop-filter: blur(10px);
+      }
+
+      .modal-content {
+        margin: auto;
+        display: block;
+        max-width: 90%;
+        max-height: 90vh;
+        border-radius: var(--card-border-radius);
+      }
+
+      .modal-close {
+        position: absolute;
+        right: 2rem;
+        top: 1rem;
+        color: var(--text-primary);
+        font-size: 2.5rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: color 0.3s ease;
+      }
+
+      .modal-close:hover {
+        color: #9561e2;
+      }
+
+      /* 添加汉堡菜单样式 */
+      .hamburger {
+        display: none;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 20px;
+        cursor: pointer;
+        z-index: 1002;
+      }
+
+      .hamburger span {
+        display: block;
+        height: 2px;
+        width: 100%;
+        background-color: var(--text-primary);
+        transition: all 0.3s ease;
+      }
+
+      /* 移动端导航菜单样式 */
+      .mobile-nav {
+        display: none;
+        position: fixed;
+        top: 60px;
+        left: 0;
+        right: 0;
+        background: rgba(10, 6, 31, 0.98);
+        backdrop-filter: blur(10px);
+        padding: 1rem;
+        z-index: 1001;
+      }
+
+      .mobile-nav.active {
+        display: block;
+      }
+
+      .mobile-nav-links {
+        list-style: none;
+        padding: 0;
+      }
+
+      .mobile-nav-links li {
+        padding: 1rem 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .mobile-nav-links a {
+        color: var(--text-primary);
+        text-decoration: none;
+        font-size: 1.1rem;
+        display: block;
+      }
+
+      /* 修改响应式样式 */
+      @media (max-width: 768px) {
+        .nav-links {
+          display: none !important;
+        }
+        .hamburger {
+          display: flex;
+        }
+      }
+
+      /* 修改关于我部分的标题样式 */
+      .intro-content h2 {
+        text-align: left;
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+      }
+
+      /* 修改通用标题样式，排除关于我部分 */
+      .section-title {
+        font-size: 2.5rem;
+        margin-bottom: 3rem;
+        text-align: center;
+      }
+
+      @media (max-width: 768px) {
+        .intro-content h2 {
+          font-size: clamp(1.8rem, 4vw, 2.5rem);
+        }
+      }
+
+      /* 在 :root 变量定义后添加 */
+      .knowledge-card a {
+        transition: color 0.3s ease;
+      }
+
+      .knowledge-card a:hover {
+        color: #9561e2 !important;
+      }
+
+      /* 让整个卡片可点击 */
+      .knowledge-card {
+        cursor: pointer;
+        transition: transform 0.3s ease;
+      }
+
+      .knowledge-card:hover {
+        transform: translateY(-5px);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 头部区域 -->
+    <nav class="navbar">
+      <div class="container nav-container">
+        <div class="nav-logo">Cognifusion</div>
+        <div class="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <ul class="nav-links">
+          <li><a href="#header">首页</a></li>
+          <li><a href="#intro">关于我</a></li>
+          <li><a href="#capabilities">项目</a></li>
+          <li><a href="#gallery">展厅</a></li>
+          <li><a href="#vision">愿景</a></li>
+          <li><a href="#knowledge">博客</a></li>
+          <li><a href="#contact">联系我</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- 添加移动端导航菜单 -->
+    <div class="mobile-nav">
+      <ul class="mobile-nav-links">
+        <li><a href="#header">首页</a></li>
+        <li><a href="#intro">关于我</a></li>
+        <li><a href="#capabilities">项目</a></li>
+        <li><a href="#gallery">展厅</a></li>
+        <li><a href="#vision">愿景</a></li>
+        <li><a href="#knowledge">博客</a></li>
+        <li><a href="#contact">联系我</a></li>
+      </ul>
+    </div>
+
+    <header id="header" class="header">
+      <div class="logo">Cognifusion</div>
+      <svg class="hero-ring" viewBox="0 0 500 500">
+        <defs>
+          <linearGradient
+            id="ring-gradient"
+            x1="0%"
+            y1="0%"
+            x2="100%"
+            y2="100%"
+          >
+            <stop offset="0%" style="stop-color: #9561e2" />
+            <stop offset="100%" style="stop-color: #5865f2" />
+          </linearGradient>
+        </defs>
+        <circle
+          cx="250"
+          cy="250"
+          r="240"
+          fill="none"
+          stroke="url(#ring-gradient)"
+          stroke-width="4"
+        />
+      </svg>
+      <h1 class="hero-title">赋能创造者</h1>
+      <h2 class="hero-subtitle">探索人类与AI协作的新范式</h2>
+    </header>
+
+    <!-- 简介部分 -->
+    <section id="intro" class="intro container">
+      <div class="intro-content">
+        <h2>让AI成为每一个创造者的伙伴</h2>
+        <p>
+          cognifusion是一个专注于AI人机协作和知识创造的系统。在这里，我们探索从数据采集到知识生成，从模型训练到创意实现的全流程解决方案。
+        </p>
+        <p>
+          我们的目标是通过生成式AI技术，推动创意与知识工作的新边界，帮助用户在设计、开发和知识处理中获得高效与创新。
+        </p>
+      </div>
+      <img src="images/02-01.png" alt="关于我们" class="intro-image" />
+    </section>
+
+    <!-- 能力展示部分 -->
+    <section id="capabilities" class="capabilities container">
+      <h2 class="section-title">探索生成式AI的无限可能</h2>
+      <div class="capabilities-grid">
+        <div class="capability-card">
+          <h3>品牌风格模型定制</h3>
+          <img
+            src="images/03-01.png"
+            alt="品牌风格模型定制"
+            class="capability-image"
+          />
+          <p>
+            提供高效风格定制，结合AI生成和数据优化，完成品牌插画和营销设计。
+          </p>
+        </div>
+        <div class="capability-card">
+          <h3>AI辅助开发工具链</h3>
+          <img
+            src="images/03-02.png"
+            alt="AI辅助开发工具链"
+            class="capability-image"
+          />
+          <p>通过AI工具链优化网站设计与开发，从草图到上线仅需7天。</p>
+        </div>
+        <div class="capability-card">
+          <h3>知识生成解决方案</h3>
+          <img
+            src="images/03-03.png"
+            alt="知识生成解决方案"
+            class="capability-image"
+          />
+          <p>构建智能知识问答系统，提供精准的信息管理和问题解决方案。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gallery部分 -->
+    <section id="gallery" class="gallery container">
+      <div class="gallery-grid">
+        <div class="gallery-item">
+          <img
+            src="images/04-01.png"
+            alt="Gallery Image 1"
+            class="placeholder-image"
+          />
+        </div>
+        <div class="gallery-item">
+          <img
+            src="images/04-02.png"
+            alt="Gallery Image 2"
+            class="placeholder-image"
+          />
+        </div>
+        <div class="gallery-item">
+          <img
+            src="images/04-03.png"
+            alt="Gallery Image 3"
+            class="placeholder-image"
+          />
+        </div>
+        <div class="gallery-item">
+          <img
+            src="images/04-04.png"
+            alt="Gallery Image 4"
+            class="placeholder-image"
+          />
+        </div>
+        <div class="gallery-item">
+          <img
+            src="images/04-05.png"
+            alt="Gallery Image 5"
+            class="placeholder-image"
+          />
+        </div>
+        <div class="gallery-item">
+          <img
+            src="images/04-06.png"
+            alt="Gallery Image 6"
+            class="placeholder-image"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- 愿景部分 -->
+    <section id="vision" class="vision container">
+      <div class="floating-shape" style="left: 20%; top: 20%"></div>
+      <div class="floating-shape" style="right: 20%; bottom: 20%"></div>
+      <p class="vision-text">
+        我们相信，未来的生产力将由创意与效率结合推动，<br />
+        而人机协作正是这一革命的核心动力。<br />
+        从AI辅助创意到知识管理，我们不断探索科技赋能的无限可能。
+      </p>
+    </section>
+
+    <!-- 知识创造部分 -->
+    <section id="knowledge" class="knowledge container">
+      <h2 class="section-title">知识创造与AI的未来</h2>
+      <div class="knowledge-grid">
+        <div class="knowledge-card">
+          <div class="knowledge-card-image">
+            <img
+              src="images/02-01.png"
+              alt="认知革命2.0"
+              class="circle-image"
+            />
+          </div>
+          <h3>认知革命2.0：当AI与人类思维深度融合</h3>
+          <p>
+            从文字到互联网，每次认知工具的突破都改变了文明进程。当AI与人类思维深度融合，我们将迎来第四次认知革命。
+          </p>
+          <a
+            href="blog-post-05-04.html"
+            style="
+              color: var(--text-primary);
+              text-decoration: none;
+              display: block;
+              margin-top: 1rem;
+            "
+          >
+            阅读全文 →
+          </a>
+        </div>
+        <div class="knowledge-card">
+          <div class="knowledge-card-image">
+            <img
+              src="images/05-02.png"
+              alt="AI插画实战方法"
+              class="circle-image"
+            />
+          </div>
+          <h3>AI插画的实战方法：从风格学习到个性创作</h3>
+          <p>
+            想知道AI如何表现独特的艺术风格？本文通过实际案例，带你掌握AI风格定制的核心方法。一起探索人工智能时代的艺术创作新可能。
+          </p>
+          <a
+            href="blog-post-05-03.html"
+            style="
+              color: var(--text-primary);
+              text-decoration: none;
+              display: block;
+              margin-top: 1rem;
+            "
+          >
+            阅读全文 →
+          </a>
+        </div>
+        <div class="knowledge-card">
+          <div class="knowledge-card-image">
+            <img
+              src="images/05-03.png"
+              alt="知识管理的未来"
+              class="circle-image"
+            />
+          </div>
+          <h3>知识管理的未来：RAG的潜力</h3>
+          <p>
+            从碎片化到智能化，RAG技术如何重塑我们的知识管理方式？探索这个能够理解、连接和创造的智能协作伙伴，开启认知增强的新纪元。
+          </p>
+          <a
+            href="blog-post-05-05.html"
+            style="
+              color: var(--text-primary);
+              text-decoration: none;
+              display: block;
+              margin-top: 1rem;
+            "
+          >
+            阅读全文 →
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 联系部分 -->
+    <section id="contact" class="contact container">
+      <div class="geometric-shape"></div>
+      <div class="contact-header">
+        <h2 class="section-title">准备好与我们合作了吗？</h2>
+        <p>从创意设计到知识管理，今天，我们为你创造未来。</p>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-card">
+          <h3>PHONE</h3>
+          <p>(123) 456-7890</p>
+        </div>
+        <div class="contact-card">
+          <h3>EMAIL</h3>
+          <p>hello@reallygreatsite.com</p>
+        </div>
+        <div class="contact-card">
+          <h3>SOCIAL</h3>
+        </div>
+      </div>
+    </section>
+
+    <!-- 将CTA按钮移到这里 -->
+    <a
+      href="#contact"
+      class="cta-button"
+      onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})"
+      >联系我们</a
+    >
+
+    <!-- 在 body 标签末尾添加模态框 -->
+    <div class="modal" id="imageModal">
+      <span class="modal-close">&times;</span>
+      <img class="modal-content" id="modalImage" />
+    </div>
+
+    <!-- 在 body 标签末尾添加脚本 -->
+    <script>
+      // 获取模态框元素
+      const modal = document.getElementById("imageModal");
+      const modalImg = document.getElementById("modalImage");
+      const closeBtn = document.getElementsByClassName("modal-close")[0];
+
+      // 为所有gallery图片添加点击事件
+      document.querySelectorAll(".gallery-item img").forEach((img) => {
+        img.onclick = function () {
+          modal.style.display = "flex";
+          modalImg.src = this.src;
+        };
+      });
+
+      // 点击关闭按钮关闭模态框
+      closeBtn.onclick = function () {
+        modal.style.display = "none";
+      };
+
+      // 点击模态框背景关闭模态框
+      modal.onclick = function (event) {
+        if (event.target === modal) {
+          modal.style.display = "none";
+        }
+      };
+
+      // 按ESC关闭模态框
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape" && modal.style.display === "flex") {
+          modal.style.display = "none";
+        }
+      });
+
+      // 汉堡菜单功能
+      const hamburger = document.querySelector(".hamburger");
+      const mobileNav = document.querySelector(".mobile-nav");
+
+      hamburger.addEventListener("click", () => {
+        mobileNav.classList.toggle("active");
+        // 添加汉堡按钮动画效果
+        hamburger.classList.toggle("active");
+      });
+
+      // 点击导航链接时关闭菜单
+      document.querySelectorAll(".mobile-nav-links a").forEach((link) => {
+        link.addEventListener("click", () => {
+          mobileNav.classList.remove("active");
+          hamburger.classList.remove("active");
+        });
+      });
+
+      // 在 body 标签末尾的 script 标签中添加
+      document.querySelectorAll(".knowledge-card").forEach((card) => {
+        card.addEventListener("click", () => {
+          const link = card.querySelector("a");
+          if (link) {
+            window.location.href = link.href;
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

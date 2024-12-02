@@ -1,0 +1,15 @@
+/* 通用容器样式 */
+.container {
+  width: var(--container-width);
+  margin: 0 auto;
+  padding: 0 clamp(1rem, 5vw, 3rem);
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 80px;
+  padding: 0 clamp(1rem, 5vw, 3rem);
+  width: 100%;
+}

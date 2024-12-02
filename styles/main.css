@@ -1,0 +1,256 @@
+/* Base */
+@import "base/variables.css";
+@import "base/reset.css";
+@import "base/typography.css";
+
+/* Layout */
+@import "layout/grid.css";
+@import "layout/header.css";
+@import "layout/container.css";
+
+/* Components */
+@import "components/navbar.css";
+@import "components/search.css";
+@import "components/modal.css";
+@import "components/cards.css";
+@import "components/buttons.css";
+
+/* Sections */
+@import "sections/intro.css";
+@import "sections/capabilities.css";
+@import "sections/gallery.css";
+@import "sections/vision.css";
+@import "sections/knowledge.css";
+@import "sections/contact.css";
+
+/* Utils */
+@import "utils/animations.css";
+@import "utils/responsive.css";
+
+/* Gallery 瀑布流样式 */
+#gallery {
+  padding: 4rem 0;
+}
+
+#gallery .section-title {
+  font-size: 2.5rem;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: var(--text-primary);
+  letter-spacing: -0.5px;
+}
+
+.masonry-grid {
+  columns: 3;
+  column-gap: 24px;
+  padding: 20px;
+}
+
+.masonry-item {
+  break-inside: avoid;
+  margin-bottom: 24px;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  background-color: var(--bg-secondary);
+}
+
+.masonry-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 12px;
+  transition: transform 0.3s ease;
+}
+
+.masonry-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* 响应式布局 */
+@media screen and (max-width: 1024px) {
+  .masonry-grid {
+    columns: 2;
+    column-gap: 20px;
+  }
+
+  #gallery .section-title {
+    font-size: 2rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .masonry-grid {
+    columns: 1;
+    padding: 16px;
+  }
+
+  #gallery .section-title {
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .masonry-item {
+    margin-bottom: 20px;
+  }
+}
+
+/* 全局文字样式 */
+:root {
+  /* 标题字体大小 */
+  --h1-size: 4rem; /* 主标题 */
+  --h2-size: 2.5rem; /* 段落标题 */
+  --h3-size: 1.5rem; /* 卡片标题 */
+  --body-size: 1rem; /* 正文 */
+  --small-size: 0.875rem; /* 小字体 */
+}
+
+/* 头部区域文字 */
+.hero-title {
+  font-size: var(--h1-size);
+  font-weight: 700;
+  letter-spacing: -1px;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.hero-subtitle {
+  font-size: var(--h2-size);
+  font-weight: 500;
+  color: var(--text-secondary);
+  letter-spacing: -0.5px;
+}
+
+/* 导航栏文字 */
+.nav-logo {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.nav-links a {
+  font-size: var(--body-size);
+  font-weight: 500;
+}
+
+/* 简介部分 */
+.intro h2 {
+  font-size: var(--h2-size);
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.5px;
+}
+
+.intro p {
+  font-size: var(--body-size);
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+}
+
+/* 能力展示部分 */
+.capabilities .section-title {
+  font-size: var(--h2-size);
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.capability-card h3 {
+  font-size: var(--h3-size);
+  font-weight: 600;
+  margin: 1rem 0;
+}
+
+.capability-card p {
+  font-size: var(--body-size);
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+/* 愿景部分 */
+.vision-text {
+  font-size: 1.75rem;
+  font-weight: 500;
+  line-height: 1.6;
+  text-align: center;
+  color: var(--text-primary);
+  letter-spacing: -0.5px;
+}
+
+/* 知识部分 */
+.knowledge .section-title {
+  font-size: var(--h2-size);
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.knowledge-card h3 {
+  font-size: var(--h3-size);
+  font-weight: 600;
+  margin: 1rem 0;
+  line-height: 1.4;
+}
+
+.knowledge-card p {
+  font-size: var(--body-size);
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+/* 联系部分 */
+.contact .section-title {
+  font-size: var(--h2-size);
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.contact-header p {
+  font-size: 1.25rem;
+  text-align: center;
+  color: var(--text-secondary);
+  margin-bottom: 3rem;
+}
+
+.contact-card h3 {
+  font-size: var(--h3-size);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.contact-card p {
+  font-size: var(--body-size);
+  color: var(--text-secondary);
+}
+
+/* 响应式文字大小调整 */
+@media screen and (max-width: 1024px) {
+  :root {
+    --h1-size: 3rem;
+    --h2-size: 2rem;
+    --h3-size: 1.25rem;
+  }
+
+  .vision-text {
+    font-size: 1.5rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  :root {
+    --h1-size: 2.5rem;
+    --h2-size: 1.75rem;
+    --h3-size: 1.125rem;
+  }
+
+  .vision-text {
+    font-size: 1.25rem;
+  }
+
+  .contact-header p {
+    font-size: 1rem;
+  }
+}

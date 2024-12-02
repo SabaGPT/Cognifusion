@@ -1,0 +1,30 @@
+/* 通用网格布局容器 */
+.grid {
+  display: grid;
+  gap: 2rem; /* 网格项之间的间距 */
+}
+
+/* 两列网格布局 */
+.grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+/* 三列网格布局 */
+.grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+/* 四列网格布局 */
+.grid-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+/* 响应式网格布局 */
+@media (max-width: 768px) {
+  /* 在移动设备上转为单列布局 */
+  .grid-2,
+  .grid-3,
+  .grid-4 {
+    grid-template-columns: 1fr;
+  }
+}

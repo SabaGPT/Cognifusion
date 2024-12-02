@@ -1,0 +1,44 @@
+/* 所有标题元素的基础样式 */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+/* 主标题样式 */
+h1 {
+  font-size: clamp(3rem, 6vw, 5rem); /* 响应式字体大小 */
+}
+
+/* 次级标题样式 */
+h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+}
+
+/* 三级标题样式 */
+h3 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+/* 段落文本样式 */
+p {
+  margin-bottom: 1rem;
+  line-height: 1.8; /* 较大的行高提高可读性 */
+}
+
+/* 链接基础样式 */
+a {
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: color 0.3s ease; /* 平滑的颜色过渡效果 */
+}
+
+/* 链接悬停效果 */
+a:hover {
+  color: #9561e2;
+}

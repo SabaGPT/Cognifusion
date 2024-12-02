@@ -1,0 +1,13 @@
+:root {
+  --primary-bg: #06002e;
+  --primary-gradient: linear-gradient(135deg, #9561e2 0%, #5865f2 100%);
+  --card-gradient: linear-gradient(
+    135deg,
+    rgba(149, 97, 226, 0.1) 0%,
+    rgba(88, 101, 242, 0.1) 100%
+  );
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.7);
+  --card-border-radius: 1rem;
+  --container-width: 90vw;
+}

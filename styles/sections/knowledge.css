@@ -1,0 +1,45 @@
+/* 知识创造部分的整体容器 */
+.knowledge {
+  min-height: 100vh;
+  padding: 6rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* 知识卡片网格布局 */
+.knowledge-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+/* 知识卡片中的圆形图片容器 */
+.knowledge-card-image {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 2rem;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+/* 圆形图片样式 */
+.circle-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 知识卡片中的链接样式 */
+.knowledge-card a {
+  color: var(--text-primary);
+  text-decoration: none;
+  display: block;
+  margin-top: 1rem;
+  transition: color 0.3s ease;
+}
+
+/* 链接悬停效果 */
+.knowledge-card a:hover {
+  color: #9561e2;
+}

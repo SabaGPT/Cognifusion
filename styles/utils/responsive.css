@@ -1,0 +1,17 @@
+@media (max-width: 768px) {
+  .nav-links {
+    display: none !important;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+  /* 其他响应式样式... */
+}
+
+@media (max-width: 480px) {
+  .container {
+    width: 95vw;
+  }
+  /* 其他小屏幕样式... */
+}

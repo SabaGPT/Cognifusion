@@ -1,0 +1,19 @@
+.gallery {
+  min-height: 100vh;
+  padding: 6rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.placeholder-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

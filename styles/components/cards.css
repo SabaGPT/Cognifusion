@@ -1,0 +1,46 @@
+.capability-card {
+  background: var(--card-gradient);
+  border-radius: var(--card-border-radius);
+  padding: 2rem;
+  transition: transform 0.3s ease;
+}
+
+.capability-card:hover {
+  transform: translateY(-5px);
+}
+
+.knowledge-card {
+  background: var(--card-gradient);
+  border-radius: var(--card-border-radius);
+  padding: 2rem;
+  height: 100%;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.knowledge-card:hover {
+  transform: translateY(-5px);
+}
+
+.contact-card {
+  background: var(--card-gradient);
+  border-radius: var(--card-border-radius);
+  padding: 2rem;
+  text-align: center;
+}
+
+.gallery-item {
+  background: var(--card-gradient);
+  border-radius: var(--card-border-radius);
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  overflow: hidden;
+}
+
+.gallery-item:hover {
+  transform: translateY(-5px);
+}

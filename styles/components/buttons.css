@@ -1,0 +1,20 @@
+.cta-button {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  display: inline-block;
+  background: var(--primary-gradient);
+  color: var(--text-primary);
+  text-decoration: none;
+  padding: 1rem 2.5rem;
+  border-radius: 2rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  z-index: 999;
+}
+
+.cta-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(149, 97, 226, 0.2);
+}

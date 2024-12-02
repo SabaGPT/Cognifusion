@@ -4,669 +4,35 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cognifusion - AI与人类协作的未来</title>
-    <style>
-      /* 定义全局变量，便于统一管理颜色和样式 */
-      :root {
-        --primary-bg: #06002e;
-        --primary-gradient: linear-gradient(135deg, #9561e2 0%, #5865f2 100%);
-        --card-gradient: linear-gradient(
-          135deg,
-          rgba(149, 97, 226, 0.1) 0%,
-          rgba(88, 101, 242, 0.1) 100%
-        );
-        --text-primary: #ffffff;
-        --text-secondary: rgba(255, 255, 255, 0.7);
-        --card-border-radius: 1rem;
-        --container-width: 90vw;
-      }
-
-      /* 重置默认样式 */
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      body {
-        background-color: var(--primary-bg);
-        color: var(--text-primary);
-        font-family: system-ui, -apple-system, sans-serif;
-        line-height: 1.5;
-        overflow-x: hidden;
-      }
-
-      /* 通用容器样式 */
-      .container {
-        width: var(--container-width);
-        margin: 0 auto;
-        padding: 0 clamp(1rem, 5vw, 3rem);
-      }
-
-      /* 头部样式 */
-      .header {
-        position: relative;
-        height: 100vh;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: flex-start;
-        text-align: left;
-        padding: 2rem;
-        padding-top: 80px;
-        background-image: url("images/01-01.png");
-        background-size: cover;
-        background-position: center;
-      }
-
-      .header-content {
-        max-width: 50%;
-        margin-left: 5%;
-      }
-
-      .logo {
-        display: none;
-      }
-
-      .hero-ring {
-        position: absolute;
-        width: 500px;
-        height: 500px;
-        animation: rotate 20s linear infinite;
-      }
-
-      .hero-title {
-        font-size: clamp(3rem, 6vw, 5rem);
-        margin-bottom: 0;
-        position: relative;
-        z-index: 1;
-      }
-
-      .hero-subtitle {
-        font-size: clamp(1.5rem, 4vw, 3rem);
-        margin-top: 0;
-        position: relative;
-        z-index: 1;
-      }
-
-      /* 简介部分样式 */
-      .intro {
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        padding: 6rem 0;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 4rem;
-        align-items: center;
-      }
-
-      .intro-content {
-        display: flex;
-        flex-direction: column;
-        gap: 1.5rem;
-        max-width: 600px;
-      }
-
-      .intro-image {
-        border-radius: var(--card-border-radius);
-        height: 400px;
-        width: 100%;
-        object-fit: cover;
-      }
-
-      .intro-content p {
-        font-size: clamp(1.1rem, 2vw, 1.3rem);
-        line-height: 1.8;
-      }
-
-      /* 能力展示部分样式 */
-      .capabilities {
-        min-height: 100vh;
-        padding: 6rem 0;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-      }
-
-      .section-title {
-        font-size: 2.5rem;
-        margin-bottom: 3rem;
-        text-align: center;
-      }
-
-      .capabilities-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 2rem;
-      }
-
-      .capability-card {
-        background: var(--card-gradient);
-        border-radius: var(--card-border-radius);
-        padding: 2rem;
-        transition: transform 0.3s ease;
-      }
-
-      .capability-card:hover {
-        transform: translateY(-5px);
-      }
-
-      /* Gallery部分样式 */
-      .gallery {
-        min-height: 100vh;
-        padding: 6rem 0;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-      }
-
-      .gallery-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 2rem;
-      }
-
-      .gallery-item {
-        background: var(--card-gradient);
-        border-radius: var(--card-border-radius);
-        aspect-ratio: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        cursor: pointer;
-        transition: transform 0.3s ease;
-        overflow: hidden;
-      }
-
-      .gallery-item:hover {
-        transform: translateY(-5px);
-      }
-
-      .placeholder-image {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-
-      /* 愿景部分样式 */
-      .vision {
-        min-height: 100vh;
-        padding: 6rem 0;
-        text-align: center;
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-      }
-
-      .vision-text {
-        font-size: clamp(1.8rem, 4vw, 2.5rem);
-        line-height: 2;
-        max-width: min(90%, 1200px);
-        margin: 0 auto;
-        padding: 0 1rem;
-      }
-
-      .floating-shape {
-        position: absolute;
-        width: 100px;
-        height: 100px;
-        background: var(--primary-gradient);
-        filter: blur(30px);
-        opacity: 0.5;
-        border-radius: 50%;
-        animation: float 6s ease-in-out infinite;
-      }
-
-      /* 知识创造部分样式 */
-      .knowledge {
-        min-height: 100vh;
-        padding: 6rem 0;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-      }
-
-      .knowledge-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 2rem;
-      }
-
-      .knowledge-card {
-        background: var(--card-gradient);
-        border-radius: var(--card-border-radius);
-        padding: 2rem;
-        height: 100%;
-      }
-
-      .knowledge-card-image {
-        width: 120px;
-        height: 120px;
-        margin: 0 auto 2rem;
-        border-radius: 50%;
-        overflow: hidden;
-      }
-
-      .circle-image {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-
-      /* 联系部分样式 */
-      .contact {
-        min-height: 100vh;
-        padding: 6rem 0;
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-      }
-
-      .contact-header {
-        margin-bottom: 3rem;
-        text-align: center;
-      }
-
-      .contact-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 2rem;
-      }
-
-      .contact-card {
-        background: var(--card-gradient);
-        border-radius: var(--card-border-radius);
-        padding: 2rem;
-        text-align: center;
-      }
-
-      .geometric-shape {
-        position: absolute;
-        right: 2rem;
-        top: 2rem;
-        width: 200px;
-        height: 200px;
-        background: var(--primary-gradient);
-        transform: perspective(500px) rotateX(30deg) rotateY(-30deg);
-      }
-
-      /* 动画定义 */
-      @keyframes rotate {
-        from {
-          transform: rotate(0deg);
-        }
-        to {
-          transform: rotate(360deg);
-        }
-      }
-
-      @keyframes float {
-        0% {
-          transform: translateY(0);
-        }
-        50% {
-          transform: translateY(-20px);
-        }
-        100% {
-          transform: translateY(0);
-        }
-      }
-
-      /* 响应式设计 */
-      @media (min-width: 768px) {
-        .capabilities-grid,
-        .knowledge-grid,
-        .contact-grid,
-        .gallery-grid {
-          gap: clamp(2rem, 3vw, 4rem);
-        }
-      }
-
-      @media (max-width: 768px) {
-        .intro {
-          grid-template-columns: 1fr;
-          padding: 3rem 0;
-          gap: 2rem;
-        }
-
-        .hero-title {
-          font-size: clamp(2rem, 5vw, 3.5rem);
-        }
-
-        .hero-subtitle {
-          font-size: clamp(1.2rem, 3vw, 2rem);
-        }
-
-        .hero-ring {
-          width: 90vw;
-          height: 90vw;
-          max-width: 300px;
-          max-height: 300px;
-        }
-
-        .capabilities-grid,
-        .knowledge-grid,
-        .contact-grid,
-        .gallery-grid {
-          grid-template-columns: 1fr;
-          gap: 1.5rem;
-        }
-
-        .section-title {
-          font-size: clamp(1.8rem, 4vw, 2.5rem);
-          margin-bottom: 2rem;
-        }
-
-        .capability-card,
-        .knowledge-card,
-        .contact-card {
-          padding: 1.5rem;
-        }
-
-        .vision-text {
-          font-size: clamp(1.8rem, 4vw, 2.5rem);
-          line-height: 1.6;
-          padding: 0 1rem;
-        }
-
-        .floating-shape {
-          width: 60px;
-          height: 60px;
-        }
-
-        .intro-content {
-          gap: 1rem;
-          max-width: 100%;
-        }
-
-        .intro-content p {
-          font-size: 1rem;
-          line-height: 1.6;
-        }
-      }
-
-      /* 添加更小屏幕的样式 */
-      @media (max-width: 480px) {
-        .container {
-          width: 95vw;
-        }
-
-        .nav-container {
-          height: 60px;
-          padding: 0 1rem;
-        }
-
-        .nav-logo {
-          font-size: 1.2rem;
-        }
-
-        .capability-card,
-        .knowledge-card,
-        .contact-card {
-          padding: 1rem;
-        }
-
-        .intro-image {
-          height: 250px;
-        }
-      }
-
-      /* 在 body 样式之后添加 */
-      .navbar {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        background: rgba(10, 6, 31, 0.95);
-        backdrop-filter: blur(10px);
-        z-index: 1000;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      }
-
-      .nav-container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        height: 80px;
-        padding: 0 clamp(1rem, 5vw, 3rem);
-        width: 100%;
-      }
-
-      .nav-logo {
-        font-size: 1.5rem;
-        font-weight: 600;
-        margin-right: auto;
-      }
-
-      .nav-links {
-        display: flex;
-        gap: 2rem;
-        list-style: none;
-        margin-left: auto;
-      }
-
-      .nav-links a {
-        color: var(--text-primary);
-        text-decoration: none;
-        font-size: 1rem;
-        transition: color 0.3s ease;
-        white-space: nowrap;
-      }
-
-      .nav-links a:hover {
-        color: #9561e2;
-      }
-
-      /* 修改 header 样式，添加上边距防止导航栏遮挡 */
-      .header {
-        padding-top: 80px; /* 添加这行 */
-      }
-
-      /* 修改 logo 样因为在logo在导航栏 */
-      .logo {
-        display: none; /* 隐藏原来的logo */
-      }
-
-      /* 添加响应式样式 */
-      @media (max-width: 768px) {
-        .nav-links {
-          display: none; /* 在移端先后续可以添加汉堡菜单 */
-        }
-      }
-
-      /* 在 :root 中添加 */
-      html {
-        scroll-behavior: smooth;
-      }
-
-      /* 修改 CTA 按钮样式，使其固定在右下角 */
-      .cta-button {
-        position: fixed;
-        bottom: 2rem;
-        right: 2rem;
-        display: inline-block;
-        background: var(--primary-gradient);
-        color: var(--text-primary);
-        text-decoration: none;
-        padding: 1rem 2.5rem;
-        border-radius: 2rem;
-        font-size: 1.1rem;
-        font-weight: 500;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        z-index: 999; /* 确保按钮显示在其他元素上方 */
-      }
-
-      .cta-button:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 10px 20px rgba(149, 97, 226, 0.2);
-      }
-
-      /* 添加响应式样式 */
-      @media (max-width: 768px) {
-        .cta-button {
-          bottom: 1rem;
-          right: 1rem;
-          padding: 0.8rem 2rem;
-          font-size: 1rem;
-        }
-      }
-
-      /* 加图片样式 */
-      .capability-image {
-        width: 100%;
-        height: auto;
-        margin: 1rem 0;
-        border-radius: 0.5rem;
-        object-fit: cover;
-      }
-
-      /* 添加模态框相关样式 */
-      .modal {
-        display: none;
-        position: fixed;
-        z-index: 1001;
-        padding: 2rem;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(6, 0, 46, 0.95);
-        backdrop-filter: blur(10px);
-      }
-
-      .modal-content {
-        margin: auto;
-        display: block;
-        max-width: 90%;
-        max-height: 90vh;
-        border-radius: var(--card-border-radius);
-      }
-
-      .modal-close {
-        position: absolute;
-        right: 2rem;
-        top: 1rem;
-        color: var(--text-primary);
-        font-size: 2.5rem;
-        font-weight: bold;
-        cursor: pointer;
-        transition: color 0.3s ease;
-      }
-
-      .modal-close:hover {
-        color: #9561e2;
-      }
-
-      /* 添加汉堡菜单样式 */
-      .hamburger {
-        display: none;
-        flex-direction: column;
-        justify-content: space-between;
-        width: 30px;
-        height: 20px;
-        cursor: pointer;
-        z-index: 1002;
-      }
-
-      .hamburger span {
-        display: block;
-        height: 2px;
-        width: 100%;
-        background-color: var(--text-primary);
-        transition: all 0.3s ease;
-      }
-
-      /* 移动端导航菜单样式 */
-      .mobile-nav {
-        display: none;
-        position: fixed;
-        top: 60px;
-        left: 0;
-        right: 0;
-        background: rgba(10, 6, 31, 0.98);
-        backdrop-filter: blur(10px);
-        padding: 1rem;
-        z-index: 1001;
-      }
-
-      .mobile-nav.active {
-        display: block;
-      }
-
-      .mobile-nav-links {
-        list-style: none;
-        padding: 0;
-      }
-
-      .mobile-nav-links li {
-        padding: 1rem 0;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      }
-
-      .mobile-nav-links a {
-        color: var(--text-primary);
-        text-decoration: none;
-        font-size: 1.1rem;
-        display: block;
-      }
-
-      /* 修改响应式样式 */
-      @media (max-width: 768px) {
-        .nav-links {
-          display: none !important;
-        }
-        .hamburger {
-          display: flex;
-        }
-      }
-
-      /* 修改关于我部分的标题样式 */
-      .intro-content h2 {
-        text-align: left;
-        font-size: 2.5rem;
-        margin-bottom: 1rem;
-      }
-
-      /* 修改通用标题样式，排除关于我部分 */
-      .section-title {
-        font-size: 2.5rem;
-        margin-bottom: 3rem;
-        text-align: center;
-      }
-
-      @media (max-width: 768px) {
-        .intro-content h2 {
-          font-size: clamp(1.8rem, 4vw, 2.5rem);
-        }
-      }
-
-      /* 在 :root 变量定义后添加 */
-      .knowledge-card a {
-        transition: color 0.3s ease;
-      }
-
-      .knowledge-card a:hover {
-        color: #9561e2 !important;
-      }
-
-      /* 让整个卡片可点击 */
-      .knowledge-card {
-        cursor: pointer;
-        transition: transform 0.3s ease;
-      }
-
-      .knowledge-card:hover {
-        transform: translateY(-5px);
-      }
-    </style>
+    <link rel="stylesheet" href="styles/main.css" />
   </head>
   <body>
     <!-- 头部区域 -->
     <nav class="navbar">
       <div class="container nav-container">
         <div class="nav-logo">Cognifusion</div>
+        <div class="search-box">
+          <input type="text" class="search-input" placeholder="搜索内容..." />
+          <div class="search-results"></div>
+        </div>
+        <div class="search-container">
+          <div class="search-icon">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </div>
+        </div>
         <div class="hamburger">
           <span></span>
           <span></span>
@@ -686,6 +52,10 @@
 
     <!-- 添加移动端导航菜单 -->
     <div class="mobile-nav">
+      <div class="search-box">
+        <input type="text" class="search-input" placeholder="搜索内容..." />
+        <div class="search-results"></div>
+      </div>
       <ul class="mobile-nav-links">
         <li><a href="#header">首页</a></li>
         <li><a href="#intro">关于我</a></li>
@@ -756,48 +126,25 @@
 
     <!-- Gallery部分 -->
     <section id="gallery" class="gallery container">
-      <div class="gallery-grid">
-        <div class="gallery-item">
-          <img
-            src="images/04-01.png"
-            alt="Gallery Image 1"
-            class="placeholder-image"
-          />
+      <h2 class="section-title">作品展示</h2>
+      <div class="masonry-grid">
+        <div class="masonry-item">
+          <img src="images/04-01.png" alt="Gallery Image 1" loading="lazy" />
         </div>
-        <div class="gallery-item">
-          <img
-            src="images/04-02.png"
-            alt="Gallery Image 2"
-            class="placeholder-image"
-          />
+        <div class="masonry-item">
+          <img src="images/04-02.png" alt="Gallery Image 2" loading="lazy" />
         </div>
-        <div class="gallery-item">
-          <img
-            src="images/04-03.png"
-            alt="Gallery Image 3"
-            class="placeholder-image"
-          />
+        <div class="masonry-item">
+          <img src="images/04-03.png" alt="Gallery Image 3" loading="lazy" />
         </div>
-        <div class="gallery-item">
-          <img
-            src="images/04-04.png"
-            alt="Gallery Image 4"
-            class="placeholder-image"
-          />
+        <div class="masonry-item">
+          <img src="images/04-04.png" alt="Gallery Image 4" loading="lazy" />
         </div>
-        <div class="gallery-item">
-          <img
-            src="images/04-05.png"
-            alt="Gallery Image 5"
-            class="placeholder-image"
-          />
+        <div class="masonry-item">
+          <img src="images/04-05.png" alt="Gallery Image 5" loading="lazy" />
         </div>
-        <div class="gallery-item">
-          <img
-            src="images/04-06.png"
-            alt="Gallery Image 6"
-            class="placeholder-image"
-          />
+        <div class="masonry-item">
+          <img src="images/04-06.png" alt="Gallery Image 6" loading="lazy" />
         </div>
       </div>
     </section>
@@ -813,7 +160,7 @@
       </p>
     </section>
 
-    <!-- 知识创造部分 -->
+    <!-- 知识造部分 -->
     <section id="knowledge" class="knowledge container">
       <h2 class="section-title">知识创造与AI的未来</h2>
       <div class="knowledge-grid">
@@ -875,7 +222,7 @@
           </div>
           <h3>知识管理的未来：RAG的潜力</h3>
           <p>
-            从碎片化到智能化，RAG技术如何重塑我们的知识管理方式？探索这个能够理解、连接和创造的智能协作伙伴，开启认知增强的新纪元。
+            从碎片化到智能化，RAG技术如何重塑我们知识管理方式？探索这个能够理解、连接和创造的智能协作伙伴，开启认知增强的新纪元。
           </p>
           <a
             href="blog-posts/blog-post-05-05.html"
@@ -929,66 +276,6 @@
     </div>
 
     <!-- 在 body 标签末尾添加脚本 -->
-    <script>
-      // 获取模态框元素
-      const modal = document.getElementById("imageModal");
-      const modalImg = document.getElementById("modalImage");
-      const closeBtn = document.getElementsByClassName("modal-close")[0];
-
-      // 为所有gallery图片添加点击事件
-      document.querySelectorAll(".gallery-item img").forEach((img) => {
-        img.onclick = function () {
-          modal.style.display = "flex";
-          modalImg.src = this.src;
-        };
-      });
-
-      // 点击关闭按钮关闭模态框
-      closeBtn.onclick = function () {
-        modal.style.display = "none";
-      };
-
-      // 点击模态框背景关闭模态框
-      modal.onclick = function (event) {
-        if (event.target === modal) {
-          modal.style.display = "none";
-        }
-      };
-
-      // 按ESC关闭模态框
-      document.addEventListener("keydown", function (event) {
-        if (event.key === "Escape" && modal.style.display === "flex") {
-          modal.style.display = "none";
-        }
-      });
-
-      // 汉堡菜单功能
-      const hamburger = document.querySelector(".hamburger");
-      const mobileNav = document.querySelector(".mobile-nav");
-
-      hamburger.addEventListener("click", () => {
-        mobileNav.classList.toggle("active");
-        // 添加汉堡按钮动画效果
-        hamburger.classList.toggle("active");
-      });
-
-      // 点击导航链接时关闭菜单
-      document.querySelectorAll(".mobile-nav-links a").forEach((link) => {
-        link.addEventListener("click", () => {
-          mobileNav.classList.remove("active");
-          hamburger.classList.remove("active");
-        });
-      });
-
-      // 在 body 标签末尾的 script 标签中添加
-      document.querySelectorAll(".knowledge-card").forEach((card) => {
-        card.addEventListener("click", () => {
-          const link = card.querySelector("a");
-          if (link) {
-            window.location.href = link.href;
-          }
-        });
-      });
-    </script>
+    <script src="js/main.js"></script>
   </body>
 </html>

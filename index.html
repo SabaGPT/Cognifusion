@@ -47,15 +47,20 @@
         position: relative;
         height: 100vh;
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         align-items: center;
-        justify-content: center;
-        text-align: center;
+        justify-content: flex-start;
+        text-align: left;
         padding: 2rem;
         padding-top: 80px;
         background-image: url("images/01-01.png");
         background-size: cover;
         background-position: center;
+      }
+
+      .header-content {
+        max-width: 50%;
+        margin-left: 5%;
       }
 
       .logo {
@@ -693,9 +698,10 @@
     </div>
 
     <header id="header" class="header">
-      <div class="logo">Cognifusion</div>
-      <h1 class="hero-title">赋能创造者</h1>
-      <h2 class="hero-subtitle">探索人类与AI协作的新范式</h2>
+      <div class="header-content">
+        <h1 class="hero-title">赋能创造者</h1>
+        <h2 class="hero-subtitle">探索人类与AI协作的新范式</h2>
+      </div>
     </header>
 
     <!-- 简介部分 -->

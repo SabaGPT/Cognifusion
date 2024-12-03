@@ -110,7 +110,7 @@ const modalImg = document.getElementById("modalImage");
 const closeBtn = document.getElementsByClassName("modal-close")[0];
 
 // 为所有gallery图片添加点击事件
-document.querySelectorAll(".gallery-item img").forEach((img) => {
+document.querySelectorAll(".masonry-item img").forEach((img) => {
   img.onclick = function () {
     modal.style.display = "flex";
     modalImg.src = this.src;
@@ -161,6 +161,142 @@ document.addEventListener("click", (e) => {
     hamburger.classList.remove("active");
     mobileNav.classList.remove("active");
   }
+});
+
+// Gallery 控制
+document.addEventListener("DOMContentLoaded", function () {
+  const track = document.querySelector(".gallery-track");
+  const slides = Array.from(document.querySelectorAll(".gallery-slide"));
+  const nextButton = document.querySelector(".next-button");
+  const prevButton = document.querySelector(".prev-button");
+
+  let currentIndex = 0;
+
+  // 根据屏幕宽度决定显示数量
+  function getSlidesPerView() {
+    if (window.innerWidth <= 480) return 1;
+    if (window.innerWidth <= 768) return 2;
+    if (window.innerWidth <= 1200) return 3;
+    return 4;
+  }
+
+  let slidesPerView = getSlidesPerView();
+  let maxIndex = Math.max(0, slides.length - slidesPerView);
+
+  let isAnimating = false; // 防止动画过程中重复触发
+
+  function updateSlidePosition(smooth = true) {
+    if (smooth) {
+      track.style.transition =
+        "transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1)";
+    } else {
+      track.style.transition = "none";
+    }
+
+    const offset = (100 / slidesPerView) * currentIndex;
+    requestAnimationFrame(() => {
+      track.style.transform = `translateX(-${offset}%)`;
+    });
+  }
+
+  function moveToSlide(index, smooth = true) {
+    if (isAnimating) return;
+    isAnimating = true;
+
+    currentIndex = Math.min(Math.max(0, index), maxIndex);
+    updateSlidePosition(smooth);
+
+    // 动画结束后重置状态
+    setTimeout(() => {
+      isAnimating = false;
+    }, 600);
+  }
+
+  nextButton.addEventListener("click", () => {
+    moveToSlide(currentIndex + 1);
+  });
+
+  prevButton.addEventListener("click", () => {
+    moveToSlide(currentIndex - 1);
+  });
+
+  // 添加触摸滑动支持
+  let touchStartX = 0;
+  let touchEndX = 0;
+  let initialOffset = 0;
+
+  track.addEventListener("touchstart", (e) => {
+    if (isAnimating) return;
+
+    touchStartX = e.touches[0].clientX;
+    initialOffset = -(100 / slidesPerView) * currentIndex;
+
+    // 取消过渡效果，实现即时跟随
+    track.style.transition = "none";
+  });
+  track.addEventListener("touchmove", (e) => {
+    if (isAnimating) return;
+
+    const currentX = e.touches[0].clientX;
+    const diff = currentX - touchStartX;
+    const newOffset = initialOffset + (diff / track.offsetWidth) * 100;
+
+    // 添加阻尼效果
+    if (
+      (currentIndex === 0 && diff > 0) ||
+      (currentIndex === maxIndex && diff < 0)
+    ) {
+      track.style.transform = `translateX(${newOffset * 0.3}%)`;
+    } else {
+      track.style.transform = `translateX(${newOffset}%)`;
+    }
+  });
+
+  track.addEventListener("touchend", (e) => {
+    if (isAnimating) return;
+
+    touchEndX = e.changedTouches[0].clientX;
+    const diff = touchStartX - touchEndX;
+
+    // 恢复过渡效果
+    track.style.transition =
+      "transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1)";
+
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) {
+        moveToSlide(currentIndex + 1);
+      } else {
+        moveToSlide(currentIndex - 1);
+      }
+    } else {
+      // 回弹到原位
+      moveToSlide(currentIndex);
+    }
+  });
+
+  // 修改窗口大小变化监听
+  let resizeTimeout;
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      const newSlidesPerView = getSlidesPerView();
+      if (newSlidesPerView !== slidesPerView) {
+        slidesPerView = newSlidesPerView;
+        maxIndex = Math.max(0, slides.length - slidesPerView);
+        currentIndex = Math.min(currentIndex, maxIndex);
+        updateSlidePosition();
+      }
+    }, 250);
+  });
+
+  // 添加键盘控制
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowLeft") {
+      moveToSlide(currentIndex - 1);
+    } else if (e.key === "ArrowRight") {
+      moveToSlide(currentIndex + 1);
+    }
+  });
 });
 
 // 其余所有JavaScript代码...

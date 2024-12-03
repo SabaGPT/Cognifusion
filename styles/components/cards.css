@@ -16,10 +16,30 @@
   height: 100%;
   cursor: pointer;
   transition: transform 0.3s ease;
+  text-decoration: none;
+  color: var(--text-primary);
+  display: flex;
+  flex-direction: column;
 }
 
 .knowledge-card:hover {
   transform: translateY(-5px);
+}
+
+.knowledge-card h3 {
+  margin: 1rem 0;
+  color: var(--text-primary);
+}
+
+.knowledge-card p {
+  color: var(--text-secondary);
+  margin-bottom: auto;
+}
+
+.read-more {
+  margin-top: 1rem;
+  color: var(--text-primary);
+  font-weight: 500;
 }
 
 .contact-card {

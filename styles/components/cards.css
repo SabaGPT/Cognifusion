@@ -44,3 +44,54 @@
 .gallery-item:hover {
   transform: translateY(-5px);
 }
+
+/* 项目卡片响应式布局 */
+@media (max-width: 768px) {
+  .capabilities-grid {
+    grid-template-columns: 1fr; /* 移动端单列显示 */
+    gap: 16px;
+    padding: 0 16px;
+  }
+
+  .capability-card {
+    width: 100%;
+    margin: 0;
+  }
+
+  .capability-image {
+    height: 200px; /* 调整图片高度 */
+  }
+}
+
+/* 博客卡片响应式布局 */
+@media (max-width: 768px) {
+  .knowledge-grid {
+    grid-template-columns: 1fr; /* 移动端单列显示 */
+    gap: 16px;
+    padding: 0 16px;
+  }
+
+  .knowledge-card {
+    width: 100%;
+    margin: 0;
+  }
+
+  .circle-image {
+    width: 100%;
+    height: 200px; /* 调整图片高度 */
+  }
+}
+
+/* 确保内容不会溢出容器 */
+.capability-card,
+.knowledge-card {
+  max-width: 100%;
+  overflow: hidden;
+}
+
+/* 图片响应式处理 */
+.capability-image,
+.circle-image {
+  width: 100%;
+  object-fit: cover;
+}
